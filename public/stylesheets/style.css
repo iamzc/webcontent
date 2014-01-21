@@ -1,0 +1,10 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00b7ff;
+}
+#main {
+  margin: auto;
+  max-width: 600px;
+}

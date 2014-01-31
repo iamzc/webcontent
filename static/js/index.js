@@ -9,5 +9,7 @@ require(['jquery/jquery-2.1.0.min','common'],function(jQuery, c){
     function interFunction(){
         return setRestTime;
     }
+    setRestTime();
     setInterval(interFunction(), 1000);
+    $('#navigator').load('views/navigator.ejs');
 });

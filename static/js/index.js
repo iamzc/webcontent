@@ -1,4 +1,4 @@
-require(['jquery/jquery-2.1.0.min','common'],function(jQuery, c){
+require(['jquery/jquery-2.1.0.min','common','templet/navigator'],function(jQuery, c, navigator){
     var spacetime = $('#spacetime');
     var domaintime = $('#domaintime');
 
@@ -11,5 +11,7 @@ require(['jquery/jquery-2.1.0.min','common'],function(jQuery, c){
     }
     setRestTime();
     setInterval(interFunction(), 1000);
-    $('#navigator').load('views/navigator.ejs');
+    $('#navigator').load('templet/navigator', function(){
+        navigator.bindEvent();
+    });
 });

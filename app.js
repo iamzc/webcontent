@@ -7,6 +7,8 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var templet = require('./routes/templet');
+var diary = require('./routes/diary');
+var note = require('./routes/note');
 var http = require('http');
 var path = require('path');
 
@@ -35,6 +37,11 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/templet/:name', templet.getTemplet);
+app.get('/diary/:name', diary.get);
+app.post('/diary/:name', diary.post);
+app.post('/note/save', note.save);
+app.get('/note/view', note.view);
+app.get('/note/list', note.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

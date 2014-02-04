@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<div>
+    <form action="/diary/save" method="post">
+        <br>天气：
+        <textarea name="weather"></textarea>
+        <br>位置：
+        <textarea name="location"></textarea>
+        <br>人际关系:
+        <textarea name="relation"></textarea>
+        <br>工作：
+        <textarea name="work"></textarea>
+        <br>健康：
+        <textarea name="health"></textarea>
+        <br>金钱：
+        <textarea name="money"></textarea>
+        <br>
+        <input type="submit" value="submit"/>
+        <input type="hidden" value="<%=token%>" name="token"/>
+    </form>
+</div>

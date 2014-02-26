@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <div>
 <% 
 function showContent(name){
@@ -8,23 +9,32 @@ function showContent(name){
     }
 }
 
-for(var i=0;i<list.length;i++){
-    var diary = list[i];
-    %>
-    <div class="diaryItem">
-    <%
-    showContent('weather');
-    showContent('date');
-    showContent('relation');
-    showContent('work');
-    showContent('health');
-    showContent('money');
-    showContent('news');
-    %>
-    </div>
-    
-    <%
+if(login == true){
+%>
+    <form action="/diary/list" method="post">
+        token:<input name="token" type="password"/>
+        <br><input type="submit" value="submit"/>
+    </form>
+<%
 }
-
+else{
+    for(var i=0;i<list.length;i++){
+        var diary = list[i];
+        %>
+        <div class="diaryItem">
+        <%
+        showContent('weather');
+        showContent('date');
+        showContent('relation');
+        showContent('work');
+        showContent('health');
+        showContent('money');
+        showContent('news');
+        %>
+        </div>
+        
+        <%
+    }
+}
 %>
 </div>

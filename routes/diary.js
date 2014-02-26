@@ -59,15 +59,21 @@ var coms={
             fs.writeFile(diaryFile, JSON.stringify(contents), function (err) {
                 if (err){
                     console.error('Can\'t save storeFile -');
-                    res.send('{"status":0}');
                 };
+                list(req, res);
             });
         }
 
         console.log("con.os.platform:" +JSON.stringify(content));
-    }
+    },
+    list: list
 }
 function list(req, res){
+    var token = req.body.token;
+    if('222136'!=token){
+        res.render('diary/list', {login:true});
+        return;
+    }
     var list = [];
     var dir = sConf.diary.dir;
     var diaryFile = dir + '/content.json';
@@ -80,7 +86,7 @@ function list(req, res){
         }
         contents = JSON.parse(data);
         
-        res.render('diary/list', {list:contents});
+        res.render('diary/list', {list:contents,login:false});
     });
 }
 function newDiary(req, res){
@@ -106,7 +112,6 @@ exports.post = function(req, res){
         }
     }else if(coms[name]){
         coms[name](req, res);
-        list(req, res);
     }else{
       res.send("can not find the path " + name);
     }

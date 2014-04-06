@@ -1,5 +1,7 @@
 var os = require('os');
 var fs = require('fs');
+var extend = require('node.extend');
+
 var commonConf = require('../serv/common/commonConf.js');
 var sConf = require('../serv/common/serverConf.js');
 
@@ -24,10 +26,6 @@ return fmt;
 var coms={
     save: function(req, res){
         var token = req.body.token;
-        if('111236' != token){
-            res.render('diary/new',{});
-            return;
-        }
         var content = {};
         for(var i=0; i< items.length; i++){
             var paramName = items[i];
@@ -66,14 +64,13 @@ var coms={
 
         console.log("con.os.platform:" +JSON.stringify(content));
     },
-    list: list
+    list: list,
+    login:login,
+    new:newDiary
 }
 function list(req, res){
+    var now = new Date();
     var token = req.body.token;
-    if('222136'!=token){
-        res.render('diary/list', {login:true});
-        return;
-    }
     var list = [];
     var dir = sConf.diary.dir;
     var diaryFile = dir + '/content.json';
@@ -92,27 +89,49 @@ function list(req, res){
 function newDiary(req, res){
     res.render('diary/newDiary', {token:'111236'});
 }
-exports.get = function(req, res){
-    var name = req.params.name;
-    if(name == 'list'){
-        list(req, res);
+function login(req, res, params){
+    var star = req.body.star;
+    params = extend({msg:"", action:""}, params);
+    var passwd = readPasswd();
+        console.log(params.action + "   " + star + " p:" + passwd);
+    if(params.action == "login" || passwd != star ){
+        console.log(111);
+        res.render('diary/login',params);
     }else{
-        res.render('diary/' + name, {path:commonConf.path});
-    }
-};
-
-exports.post = function(req, res){
-    var name = req.params.name;
-    if(name == 'new'){
-        var star = req.body.star;
-        if('222136' == star){
-            newDiary(req, res);
+        console.log(222);
+        // 登录成功
+        req.session.user = {date: new Date().getTime()};
+        var action = req.body.action;
+        console.log("action is:" + action);
+        if(coms[action]){
+            coms[action](req, res);
         }else{
-            res.render('diary/new',{});
+            res.render('diary/login',{msg:"error path"});
         }
-    }else if(coms[name]){
-        coms[name](req, res);
-    }else{
-      res.send("can not find the path " + name);
     }
 }
+function readPasswd(){
+    var userdb = sConf.diary.userdb;
+    var data = fs.readFileSync(userdb);
+    if(data == null || data.length<1){
+        return "lksjd&(&(&(HDIFhfsyfihwf(*(*OIFHF52s4d64fD&S(*F&D(FOSIDFJLFlj*&%$#$DIHF^$^#^%$^FDIOSFGDSF(O";
+    }
+    var contents = JSON.parse(data);
+    return contents.passwd;
+}
+function post(req, res){
+    var name = req.params.name;
+    if(name != 'login' && ! req.session.user){
+        login(req, res, {action:name});
+        return;
+    }
+    if(coms[name]){
+        coms[name](req, res);
+    }else{
+        login(req, res, {msg:"error path"});
+    }
+};
+exports.get = function(req, res){
+    post(req, res);
+};
+exports.post = post;

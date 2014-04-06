@@ -23,8 +23,20 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser('your secret here, haha my secret'));
 app.use(express.session());
+app.use(function(req, res, next){
+	if(req.session.user){
+		// 60秒session过期
+		var sessionTime = req.session.user.date;
+		if(new Date().getTime() - sessionTime > 60000){
+			req.session.user = null;
+		}else{
+			req.session.user = {date: new Date().getTime()};
+		}
+	}
+	next();
+});
 app.use(app.router);
 app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));

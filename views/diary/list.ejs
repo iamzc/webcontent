@@ -4,7 +4,7 @@
 function showContent(name){
     if(diary[name]){
 %>
-    <div><%=diary[name]%></div>
+    <div><%=name%>:<%=diary[name]%></div>
 <%
     }
 }
@@ -30,7 +30,9 @@ else{
         showContent('health');
         showContent('money');
         showContent('news');
+        showContent('read');
         %>
+        <br>
         </div>
         
         <%

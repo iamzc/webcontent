@@ -5,7 +5,7 @@ var extend = require('node.extend');
 var commonConf = require('../serv/common/commonConf.js');
 var sConf = require('../serv/common/serverConf.js');
 
-var items=['weather','location','relation','work','health','money','news'];
+var items=['weather','location','relation','work','health','money','news','read'];
 
 Date.prototype.Format = function (fmt) { //author: meizz 
 var o = {

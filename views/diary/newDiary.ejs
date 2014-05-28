@@ -2,9 +2,11 @@
 <div>
     <form action="/diary/save" method="post">
         <br>天气：
-        <textarea name="weather"></textarea>
+        <textarea name="weather" id="weather">晴</textarea>
+	<input type="button" value="clear" onclick="$('#weather').val('')"/>
         <br>位置：
-        <textarea name="location"></textarea>
+        <textarea name="location" id="location">北京</textarea>
+	<input type="button" value="clear" onclick="$('#location').val('')"/>
         <br>人际关系:
         <textarea name="relation"></textarea>
         <br>工作：
@@ -22,3 +24,4 @@
         <input type="hidden" value="<%=token%>" name="token"/>
     </form>
 </div>
+<script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>

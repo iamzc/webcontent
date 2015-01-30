@@ -48,6 +48,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/usersession', user.session);
 app.get('/templet/:name', templet.getTemplet);
 app.get('/diary/:name', diary.get);
 app.post('/diary/:name', diary.post);

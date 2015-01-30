@@ -87,7 +87,7 @@ function list(req, res){
     });
 }
 function newDiary(req, res){
-    res.render('diary/newDiary', {token:'111236'});
+    res.render('diary/newDiary', {token:'xxxxxx', path:commonConf.path});
 }
 function login(req, res, params){
     var star = req.body.star;

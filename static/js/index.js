@@ -1,4 +1,4 @@
-require(['jquery/jquery-2.1.0.min','common','templet/navigator'],function(jQuery, c, navigator){
+require(['jquery/jquery-2.1.0.min','common/time','templet/navigator'],function(jQuery, c, navigator){
     var spacetime = $('#spacetime');
     var domaintime = $('#domaintime');
 

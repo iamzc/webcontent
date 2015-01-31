@@ -1,5 +1,5 @@
 var diary ={
-    dir:"/root/diary",
-    userdb:"/root/diary/userdb.json"
+    dir:"/home/zhch/diary",
+    userdb:"/home/zhch/diary/userdb.json"
 };
 exports.diary=diary;

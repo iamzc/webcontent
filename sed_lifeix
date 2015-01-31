@@ -1,0 +1,10 @@
+#! /bin/bash
+
+web=`pwd`
+
+for file in "serv/common/serverConf.js"; do
+    filename=$web/$file
+    echo $filename
+    # 替换目录
+    sed -i "s/home.*diary/home\/lifeix\/temp\/d4\/diary/g"  $filename
+done

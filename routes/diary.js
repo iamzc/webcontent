@@ -7,22 +7,23 @@ var sConf = require('../serv/common/serverConf.js');
 
 var items=['weather','location','relation','work','health','money','news','read','other'];
 
+// 格式化时间的方法
 Date.prototype.Format = function (fmt) { //author: meizz 
-var o = {
-    "M+": this.getMonth() + 1, //月份 
-    "d+": this.getDate(), //日 
-    "h+": this.getHours(), //小时 
-    "m+": this.getMinutes(), //分 
-    "s+": this.getSeconds(), //秒 
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-    "S": this.getMilliseconds() //毫秒 
-};
-if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-for (var k in o)
-if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-return fmt;
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
 }
-
+// 总入口. 命令列表, 定义了这个js可以处理的方法
 var coms={
     save: function(req, res){
         var token = req.body.token;
@@ -68,6 +69,7 @@ var coms={
     login:login,
     new:newDiary
 }
+// 显示记录列表
 function list(req, res){
     var now = new Date();
     var token = req.body.token;
@@ -89,6 +91,7 @@ function list(req, res){
 function newDiary(req, res){
     res.render('diary/newDiary', {token:'xxxxxx', path:commonConf.path});
 }
+// 登录
 function login(req, res, params){
     var star = req.body.star;
     params = extend({msg:"", action:""}, params);
@@ -110,6 +113,7 @@ function login(req, res, params){
         }
     }
 }
+// 读取密码
 function readPasswd(){
     var userdb = sConf.diary.userdb;
     var data = fs.readFileSync(userdb);
@@ -119,6 +123,7 @@ function readPasswd(){
     var contents = JSON.parse(data);
     return contents.passwd;
 }
+// post方法总入口 
 function post(req, res){
     var name = req.params.name;
     if(name != 'login' && ! req.session.user){
@@ -131,6 +136,7 @@ function post(req, res){
         login(req, res, {msg:"error path"});
     }
 };
+// get 与post用同一套方法 
 exports.get = function(req, res){
     post(req, res);
 };

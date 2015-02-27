@@ -7,7 +7,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var templet = require('./routes/templet');
-var diary = require('./routes/diary');
+var diary = require('./routes/diary/diary');
 var http = require('http');
 var path = require('path');
 
